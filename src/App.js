@@ -147,9 +147,9 @@ class App extends Component {
   };
 
   handleCartRemove = product => {
-    cartId = cartId.filter(i => i !== product)
-    cart = cart.filter(i => i.id !== product)
-    this.setState({cart})
+    cartId = cartId.filter(i => i !== product);
+    cart = cart.filter(i => i.id !== product);
+    this.setState({ cart });
   };
 
   handleDelete = id => {
@@ -222,6 +222,46 @@ class App extends Component {
     this.getProduct();
   };
 
+  handleSubmitOrder = async invoice => {
+    let totalPrice = 0;
+    const config = {
+      headers: {
+        "x-access-token": localStorage.getItem("token")
+      }
+    };
+    this.state.cart.map(async value => {
+      const quantity = localStorage.getItem(value.id);
+      totalPrice = totalPrice + quantity * value.price;
+      const data = {
+        id_product: value.id,
+        quantity: quantity,
+        total_price: quantity * value.price,
+        invoice
+      };
+
+      await axios
+        .post(URL_STRING + "order/", data, config)
+        .then(res => {
+          console.log("berhasil order");
+        })
+        .catch(err => console.log("gagal order"));
+    });
+    const dataCheckout = {
+      invoice,
+      total: totalPrice
+    };
+    await axios
+      .post(URL_STRING + "checkout/", dataCheckout, config)
+      .then(res => {
+        console.log("berhasil order");
+      })
+      .catch(err => console.log("gagal order"));
+    cart = [];
+    cartId = [];
+    this.setState({ cart: [] });
+    localStorage.clear();
+  };
+
   handleSearch = e => {
     e.preventDefault();
     this.setState({ search: e.target.value }, () =>
@@ -252,7 +292,7 @@ class App extends Component {
   render() {
     return (
       <div>
-        <Navbar handleSearch={this.handleSearch} cart={this.state.cart}/>
+        <Navbar handleSearch={this.handleSearch} cart={this.state.cart} />
         <TrainMenu showModal={this.showModal} />
         <Products
           handleCart={this.handleCart}
@@ -265,6 +305,7 @@ class App extends Component {
           cart={this.state.cart}
           products={this.state.products}
           handleCartRemove={this.handleCartRemove}
+          handleSubmitOrder={this.handleSubmitOrder}
         />
         <FormProduct
           showModal={this.showModal}

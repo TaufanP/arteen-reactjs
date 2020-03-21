@@ -4,7 +4,18 @@ import CartDetail from "./cartDetail";
 
 class Cart extends Component {
   render() {
+    const date = new Date();
+    const fullYear = date.getFullYear();
+    let month = date.getMonth()+1;
+    if (month < 10) month = '0' + month
+    let day = date.getDate();
+    if (day < 10) day = '0' + day
     let modal = "button-checkout-";
+    let random = Math.floor(Math.random()*1000)
+    if (random < 1000) random = '0' + random
+    if (random < 100) random = '00' + random
+    if (random < 10) random = '000' + random
+    const invoice = day+month+fullYear+random
     modal += this.props.cart.length !== 0 ? "show" : "hide";
     return (
       <div className="cart-container">
@@ -28,7 +39,7 @@ class Cart extends Component {
             />
           ))
         )}
-        <div className={modal}>CHECKOUT</div>
+        <div className={modal} onClick = {()=>this.props.handleSubmitOrder(invoice)}>CHECKOUT</div>
       </div>
     );
   }

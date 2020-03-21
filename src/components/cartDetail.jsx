@@ -20,8 +20,14 @@ class CartDetail extends Component {
     }
     else{
         this.props.handleCartRemove(this.props.cart.id)
+        localStorage.removeItem(this.props.cart.id)
     }
   };
+
+  componentDidUpdate(){
+    localStorage.setItem(this.props.cart.id, this.state.counter)
+  }
+
   render() {
     const { counter } = this.state;
     const { image, name, price } = this.props.cart;
