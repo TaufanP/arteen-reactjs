@@ -1,15 +1,3 @@
-/* .list-products, .list-products td, .list-products th, .list-products tr{
-    border: 1px solid black;
-    border-collapse: collapse;
-    padding: 8px;
-}
-
-.list-products-container{
-    position: relative;
-    float: left;
-    width: 64%;
-} */
-
 .item-container{
     margin: 16px 0px 16px 15px;
     position: relative;

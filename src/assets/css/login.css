@@ -4,33 +4,43 @@
     position: relative;
     margin: auto;
     top: 240px;
-    color: #FFF;
-    background-color: #333;
+    color: #333;
+    background-color: rgba(255, 255, 255, 0.3);
     border-radius: 4px;
     padding: 20px 0px;
-    box-shadow: 0px 0px 16px 4px rgba(0,0,0,0.2);
+    box-shadow: 0px 0px 10px 0.1px rgba(0,0,0,0.1);
+    display: flex;
 }
 
 form{
     position: relative;
-    top: -16px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .login-input{
-    background-color: #292929;
-    color: #FFF;
+    margin-bottom: 4px;
+    background-color: rgb(255, 255, 255);
+    color: #333;
+    padding: 8px;
+    box-shadow: none;
+    border: none;
+    border-radius: 4px;
 }
 
 .login{
     position: relative;
-    left: 216px;
     background-color: rgb(28, 150, 65);
     border: none;
     padding: 6px 12px;
     border-radius: 4px;
-    color: #FFF;
+    color: #333;
     margin-top:8px;
     cursor: pointer;
+    width: 50%
 }
 
 .login:hover{

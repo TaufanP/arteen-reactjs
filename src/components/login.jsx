@@ -52,16 +52,14 @@ class Login extends Component{
                         <table>
                             <tbody>
                             <tr>
-                                <td>Username: </td>
-                                <td><input className = "login-input" type = "text" value={this.state.username} name = "username" onChange = {this.handleChange}/></td>
+                                <td><input placeholder = "Username" className = "login-input" type = "text" value={this.state.username} name = "username" onChange = {this.handleChange}/></td>
                             </tr>
                             <tr>
-                                <td>Password: </td>
-                                <td><input  className = "login-input" type = "password" value={this.state.password} name = "password" onChange = {this.handleChange}/></td>
+                                <td><input  placeholder = "Password" className = "login-input" type = "password" value={this.state.password} name = "password" onChange = {this.handleChange}/></td>
                             </tr>
                             </tbody>
                         </table>            
-                        <button className ="login" type = "submit">LOG IN</button>
+                        <button className ="login" type = "submit"><span style={{color: '#FFF'}}>LOG IN</span></button>
                     </form>
                 </div>
             </div>

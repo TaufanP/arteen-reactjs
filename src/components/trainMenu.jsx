@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 import "../assets/css/trainMenu.css";
 
 class TrainMenu extends Component {
@@ -7,13 +8,15 @@ class TrainMenu extends Component {
       <div>
         <div className="train-menu">
           <div className="add-button">
+            <Link to="/product">
             <img
               src={require("../assets/images/list-products.svg")}
               alt="product"
             />
+            </Link>
           </div>
           <div className="add-button">
-            <Link to="/login">
+            <Link to="/history">
               <img
                 src={require("../assets/images/history.svg")}
                 alt="history"

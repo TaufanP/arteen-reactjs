@@ -1,11 +1,8 @@
 import React, { Component } from "react";
 import "../assets/css/navbar.css";
 import FoodItemNav from "./foodItemNav";
-import SearchBarNav from "./searchBarNav";
-import Logout from "./logout";
-import CartHeader from "./cartHeader";
 
-class Navbar extends Component {
+class Header extends Component {
   render() {
     return (
       <div>
@@ -13,14 +10,11 @@ class Navbar extends Component {
           <div className="menu">
             <img src={require("../assets/images/menu.svg")} alt="humb menu" />
           </div>
-          <FoodItemNav text={'Food Items'}/>
-          <SearchBarNav />
-          <Logout />
-          <CartHeader cart={this.props.cart} />
+          <FoodItemNav text={"History"} />
         </div>
       </div>
     );
   }
 }
 
-export default Navbar;
+export default Header;

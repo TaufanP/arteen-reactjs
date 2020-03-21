@@ -24,6 +24,7 @@
     height: 50%;
     position: relative;
     float: left;
+    left: 8px;
 }
 
 .detail-counter{
@@ -63,7 +64,7 @@
 
 .container-counter{
     width: 55%;
-    margin-left: 32px;
+    margin-left: 16px;
 }
 
 .counter-number{
