@@ -7,8 +7,9 @@ import TrainMenu from "./components/trainMenu";
 import Navbar from "./components/navbar";
 import Products from "./components/products";
 import axios from "axios";
+import {URL_ADDRESS} from './env'
 
-const URL_STRING = "http://localhost:8080/api/v1/";
+const URL_STRING = URL_ADDRESS;
 let cartId = [];
 let cart = [];
 class App extends Component {
