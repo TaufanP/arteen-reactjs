@@ -1,8 +1,11 @@
 .card-history-container{
-    width: 875px;
-    height: 611px;
+    width: 94%;
     position: relative;
     float: left;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    flex-direction: column;
 }
 
 .item-container-history{
@@ -43,4 +46,8 @@
     font-weight: bold;
     font-size: 32px;
     flex: 5;
+}
+
+.table-container{
+    width: 92%;
 }

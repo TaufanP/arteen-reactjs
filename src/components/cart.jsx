@@ -6,15 +6,17 @@ class Cart extends Component {
   render() {
     const date = new Date();
     const fullYear = date.getFullYear();
-    let month = date.getMonth() + 1;
-    if (month < 10) month = "0" + month;
-    let day = date.getDate();
-    if (day < 10) day = "0" + day;
-    let random = Math.floor(Math.random() * 1000);
-    if (random < 1000) random = "0" + random;
-    if (random < 100) random = "00" + random;
-    if (random < 10) random = "000" + random;
-    const invoice = day + month + fullYear + random;
+    const month =
+      date.getMonth() + 1 < 10 ? "0" + date.getMonth() : date.getMonth();
+    const day = date.getDate() < 10 ? "0" + date.getDate() : date.getDate();
+    const hours =
+      date.getHours() < 10 ? "0" + date.getHours() : date.getHours();
+    const minutes =
+      date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes();
+    const seconds =
+      date.getSeconds() < 10 ? "0" + date.getSeconds() : date.getSeconds();
+    const lastID = hours + minutes + seconds;
+    const invoice = day + month + fullYear + lastID;
     let modal = "button-checkout-";
     modal += this.props.cart.length !== 0 ? "show" : "hide";
     let total = "total-price-";
@@ -38,10 +40,11 @@ class Cart extends Component {
               key={value.id}
               cart={value}
               handleCartRemove={this.props.handleCartRemove}
+              handleTotalPrice={this.props.handleTotalPrice}
             />
           ))
         )}
-        <div className = {total}>Total: Rp 105.000</div>
+        <div className={total}></div>
         <div
           className={modal}
           onClick={() => this.props.handleSubmitOrder(invoice)}
@@ -50,7 +53,8 @@ class Cart extends Component {
         </div>
         <div
           className={modal}
-          style = {{backgroundColor: 'rgb(222, 83, 83)', marginTop: 16}}
+          style={{ backgroundColor: "rgb(222, 83, 83)", marginTop: 16 }}
+          onClick = {()=>this.props.showCheckoutModal()}
         >
           CANCEL
         </div>

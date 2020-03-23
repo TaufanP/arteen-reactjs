@@ -3,7 +3,7 @@
     background-color: #FFF;
     position: relative;
     float: right;
-    min-height: 611px;
+    min-height: 650px;
     width: 29%;
     box-shadow: 0px 0px 8px 0px rgba(35, 33, 33, 0.18);
 }
@@ -55,10 +55,15 @@
     cursor: pointer;
     text-align: center;
     padding: 8px 0px;
+    transition: all 0.2s ease-in-out;
 }
 
 .button-checkout-show{
     visibility: visible;
+}
+
+.button-checkout-show:hover{
+    opacity: 0.8
 }
 
 .button-checkout-hide{

@@ -13,6 +13,7 @@ class CartDetail extends Component {
   addItem = add => {
     if (this.state.counter < this.props.cart.stock)
       this.setState({ counter: this.state.counter + add });
+    this.props.handleTotalPrice();
   };
   delItem = del => {
     if (this.state.counter > 1) {
