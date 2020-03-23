@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import "../assets/css/cartDetail.css";
-import axios from "axios";
 
 class CartDetail extends Component {
   constructor() {

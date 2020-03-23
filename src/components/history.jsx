@@ -8,12 +8,17 @@ class History extends Component {
   relogin = () => {
     this.props.history.push("/product");
   };
+  componentDidMount() {
+    if (localStorage.getItem("token") === null) {
+      this.props.history.push("/loginwarn");
+    }
+  }
   render() {
     return (
       <div>
         <Header />
         <TrainMenu />
-        <CardHistory/>
+        <CardHistory />
       </div>
     );
   }

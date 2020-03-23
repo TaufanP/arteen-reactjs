@@ -1,7 +1,34 @@
 import React, { Component } from "react";
 import "../assets/css/cardHistory.css";
+import axios from "axios";
+import { URL_ADDRESS } from "../env";
+
+const URL_STRING = URL_ADDRESS;
 
 class CardHistory extends Component {
+  constructor() {
+    super();
+    this.state = {
+      checkouts: []
+    };
+  }
+  getCheckout = async () => {
+    const config = {
+      headers: {
+        "x-access-token": localStorage.getItem("token")
+      }
+    };
+    await axios
+      .get(URL_STRING + "checkout/", config)
+      .then(res => {
+        const checkouts = res.data.result;
+        this.setState({ checkouts });
+      })
+      .catch(err => console.log(err));
+  };
+  componentDidMount() {
+    this.getCheckout();
+  }
   render() {
     return (
       <div className="card-history-container">
@@ -27,35 +54,39 @@ class CardHistory extends Component {
         </div>
         <h2>Recent Orders</h2>
         <div className="table-container">
-          <table style={{ width: "100%" }}>
+          <table style={{ width: "100%"}}>
             <thead>
               <tr>
-                <td style = {{textAlign: 'center', fontWeight: 'bold'}}>Invoice</td>
-                <td style = {{textAlign: 'center', fontWeight: 'bold'}}>Total Price</td>
-                <td style = {{textAlign: 'center', fontWeight: 'bold'}}>Last Payment</td>
+                <td style={{ textAlign: "center", fontWeight: "bold" }}>
+                  Invoice
+                </td>
+                <td style={{ textAlign: "center", fontWeight: "bold" }}>
+                  Total Price
+                </td>
+                <td style={{ textAlign: "center", fontWeight: "bold" }}>
+                  Last Payment
+                </td>
               </tr>
             </thead>
             <tbody>
-              <tr style={{ padding: 8 }}>
-                <td style={{ textAlign: "center", padding: 8 }}>230320200338290</td>
-                <td style={{ textAlign: "center", padding: 8 }}>Rp. 8000</td>
-                <td style={{ textAlign: "center", padding: 8 }}>23-03-2020 03:38</td>
-              </tr>
-              <tr style={{ padding: 8 }}>
-                <td style={{ textAlign: "center", padding: 8 }}>230320200338290</td>
-                <td style={{ textAlign: "center", padding: 8 }}>Rp. 26000</td>
-                <td style={{ textAlign: "center", padding: 8 }}>23-03-2020 03:38</td>
-              </tr>
-              <tr style={{ padding: 8 }}>
-                <td style={{ textAlign: "center", padding: 8 }}>230320200338290</td>
-                <td style={{ textAlign: "center", padding: 8 }}>Rp. 9000</td>
-                <td style={{ textAlign: "center", padding: 8 }}>23-03-2020 03:38</td>
-              </tr>
-              <tr style={{ padding: 8 }}>
-                <td style={{ textAlign: "center", padding: 8 }}>230320200338290</td>
-                <td style={{ textAlign: "center", padding: 8 }}>Rp. 36000</td>
-                <td style={{ textAlign: "center", padding: 8 }}>23-03-2020 03:38</td>
-              </tr>
+              {this.state.checkouts &&
+                this.state.checkouts.map(value => {
+                  return (
+                    <tr style={{ padding: 8 }} key={value.id}>
+                      <td style={{ textAlign: "center", padding: 8 }}>
+                        {value.invoice}
+                      </td>
+                      <td style={{ textAlign: "center", padding: 8 }}>
+                        Rp. {value.total}
+                      </td>
+                      <td style={{ textAlign: "center", padding: 8 }}>
+                        {value.last_payment
+                          .replace(/[TZ.]/gi, " ")
+                          .slice(0, 19)}
+                      </td>
+                    </tr>
+                  );
+                })}
             </tbody>
           </table>
         </div>

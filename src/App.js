@@ -274,7 +274,7 @@ class App extends Component {
     //   .catch(err => console.log("gagal order"));
 
     await axios
-      .get(URL_STRING + "checkout/210320200945", config)
+      .get(URL_STRING + "checkout/210320200001", config)
       .then(res => {
         const detailCheckout = res.data.result[0];
         this.setState({detailCheckout})
@@ -282,7 +282,7 @@ class App extends Component {
       .catch(err => console.log("gagal checkout"));
 
     await axios
-      .get(URL_STRING + "order/invoice/210320200945", config)
+      .get(URL_STRING + "order/invoice/210320200001", config)
       .then(res => {
         const detailOrders = res.data.result;
         this.setState({detailOrders})
