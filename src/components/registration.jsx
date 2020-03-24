@@ -1,9 +1,11 @@
 import React, { Component } from "react";
 import "../assets/css/login.css";
-class Login extends Component {
+import axios from "axios";
+class Registration extends Component {
   constructor() {
     super();
     this.state = {
+      name: "",
       username: "",
       password: "",
       loading: false
@@ -17,29 +19,22 @@ class Login extends Component {
   };
 
   handleSubmit = async event => {
+    const { name, username, password } = this.state;
     event.preventDefault();
+    const data = {
+      name,
+      username,
+      password
+    };
     this.setState({ loading: true });
-    await fetch("http://54.159.200.168:8081/api/v1/users/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json"
-      },
-      body: JSON.stringify(this.state)
-    })
-      .then(res => res.json())
-      .then(data => {
-        if (data.message) {
-          alert("Error logging in please try again!");
-          this.setState({ loading: false });
-        } else {
-          this.setState({ loading: false });
-          localStorage.setItem("token", data.token);
-          this.props.history.push("/product");
-        }
+    await axios
+      .post("http://54.159.200.168:8081/api/v1/users/", data)
+      .then(res => {
+        this.props.history.push("/")
+        this.setState({ loading: false });
       })
       .catch(err => {
-        alert("Error logging in please try again!");
+        alert("Registration failed! Please try again!")
         this.setState({ loading: false });
       });
   };
@@ -55,6 +50,18 @@ class Login extends Component {
           <form onSubmit={this.handleSubmit}>
             <table>
               <tbody>
+                <tr>
+                  <td>
+                    <input
+                      placeholder="Complete Name"
+                      className="login-input"
+                      type="text"
+                      value={this.state.name}
+                      name="name"
+                      onChange={this.handleChange}
+                    />
+                  </td>
+                </tr>
                 <tr>
                   <td>
                     <input
@@ -87,14 +94,18 @@ class Login extends Component {
               </button>
             ) : (
               <button className="login" type="submit">
-                <span style={{ color: "#FFF" }}>SIGN IN</span>
+                <span style={{ color: "#FFF" }}>SIGN UP</span>
               </button>
             )}
           </form>
-          <div className="signup-link" style={{ fontSize: 12 }} onClick = {()=>this.props.history.push("/regist")}>
-            Do not have an account?{" "}
+          <div
+            className="signup-link"
+            style={{ fontSize: 12 }}
+            onClick={() => this.props.history.push("/")}
+          >
+            Already have an account?{" "}
             <span style={{ color: "rgb(28, 150, 65)", fontSize: 12 }}>
-              SIGN UP
+              SIGN IN
             </span>
           </div>
         </div>
@@ -103,4 +114,4 @@ class Login extends Component {
   }
 }
 
-export default Login;
+export default Registration;

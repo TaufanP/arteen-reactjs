@@ -34,7 +34,7 @@ class CardHistory extends Component {
         const checkouts = res.data.result;
         this.setState({ checkouts });
       })
-      .catch(err => console.log(err));
+      .catch(err => alert("Fail to get the data"));
     let income = 0;
     let todaysIncome = 0;
     this.state.checkouts.map(value => {

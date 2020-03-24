@@ -43,9 +43,7 @@
     color: #CCC6C6;
 }
 
-.button-checkout, .button-checkout-show, .button-checkout-hide{
-    color: #FFF;
-    background-color: rgb(38, 224, 95);
+.button-checkout, .button-checkout-show, .button-checkout-hide, .button-checkout-processing{
     position: relative;
     top: 90%;
     width: 90%;
@@ -56,6 +54,17 @@
     text-align: center;
     padding: 8px 0px;
     transition: all 0.2s ease-in-out;
+    border: 1px solid rgb(38, 224, 95);
+}
+
+.button-checkout, .button-checkout-show, .button-checkout-hide{
+    color: #FFF;
+    background-color: rgb(38, 224, 95);
+}
+
+.button-checkout-processing{
+    color: #333;
+    background-color: transparent;
 }
 
 .button-checkout-show{

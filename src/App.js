@@ -30,7 +30,6 @@ class App extends Component {
       ],
       cart: [],
       cartFull: [],
-      sementara: [],
       name: "",
       description: "",
       price: 0,
@@ -46,7 +45,8 @@ class App extends Component {
       detailCheckout: [],
       detailOrders: [],
       showCheckout: false,
-      invoice: ''
+      invoice: '',
+      loadingSubmitOrder: false,
     };
   }
 
@@ -160,6 +160,12 @@ class App extends Component {
     this.setState({ cart });
   };
 
+  handleCartCancel = () => {
+    cartId = []
+    cart = []
+    this.setState({ cart });
+  };
+
   handleDelete = id => {
     axios.delete(URL_STRING + "product/" + id, {
       headers: { "x-access-token": localStorage.getItem("token") }
@@ -240,6 +246,7 @@ class App extends Component {
   };
 
   handleSubmitOrder = async invoice => {
+    this.setState({loadingSubmitOrder: true})
     this.setState({invoice})
     let totalPrice = 0;
     const config = {
@@ -295,6 +302,7 @@ class App extends Component {
     this.setState({ cart: [] });
     this.setState({ showCheckout: !this.state.showCheckout });
     this.state.cart.map(async value => {localStorage.removeItem(value.id);})
+    this.setState({loadingSubmitOrder: false})
   };
 
   handleSearch = e => {
@@ -351,7 +359,8 @@ class App extends Component {
           handleSubmitOrder={this.handleSubmitOrder}
           handleTotalPrice={this.handleTotalPrice}
           totalPrice={this.state.totalPrice}
-          showCheckoutModal={this.showCheckoutModal}
+          handleCartCancel={this.handleCartCancel}
+          loadingSubmitOrder = {this.loadingSubmitOrder}
         />
         <FormProduct
           showModal={this.showModal}
