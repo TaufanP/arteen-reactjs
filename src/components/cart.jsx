@@ -15,7 +15,7 @@ class Cart extends Component {
       date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes();
     const seconds =
       date.getSeconds() < 10 ? "0" + date.getSeconds() : date.getSeconds();
-    const lastID = hours + minutes + seconds;
+    const lastID = hours.toString() + minutes.toString() + seconds.toString();
     const invoice = day + month + fullYear + lastID;
     let modal = "button-checkout-";
     modal += this.props.cart.length !== 0 ? "show" : "hide";

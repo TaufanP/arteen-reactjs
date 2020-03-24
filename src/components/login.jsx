@@ -1,12 +1,16 @@
 import React, { Component } from "react";
 import "../assets/css/login.css";
+import { URL_ADDRESS } from "../env.js";
+
+const URL_STRING = URL_ADDRESS;
 class Login extends Component {
   constructor() {
     super();
     this.state = {
       username: "",
       password: "",
-      loading: false
+      loading: false,
+      error: false
     };
   }
 
@@ -19,7 +23,7 @@ class Login extends Component {
   handleSubmit = async event => {
     event.preventDefault();
     this.setState({ loading: true });
-    await fetch("http://54.159.200.168:8081/api/v1/users/login", {
+    await fetch(URL_STRING + "users/login/", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -30,16 +34,18 @@ class Login extends Component {
       .then(res => res.json())
       .then(data => {
         if (data.message) {
-          alert("Error logging in please try again!");
+          this.setState({ error: true });
           this.setState({ loading: false });
         } else {
+          this.setState({ error: false });
           this.setState({ loading: false });
           localStorage.setItem("token", data.token);
+          localStorage.setItem("cashier", this.state.username);
           this.props.history.push("/product");
         }
       })
       .catch(err => {
-        alert("Error logging in please try again!");
+        this.setState({ error: true });
         this.setState({ loading: false });
       });
   };
@@ -48,7 +54,7 @@ class Login extends Component {
     if (localStorage.getItem("token") !== null) {
       this.props.history.push("/product");
     }
-    const { loading } = this.state;
+    const { loading, error } = this.state;
     return (
       <div>
         <div className="login-container">
@@ -81,6 +87,19 @@ class Login extends Component {
                 </tr>
               </tbody>
             </table>
+            {error && (
+              <div
+                style={{
+                  marginTop: 8,
+                  marginBottom: 8,
+                  fontSize: 14,
+                  color: "red"
+                }}
+              >
+                Incorrect username or password!
+              </div>
+            )}
+
             {loading ? (
               <button className="processing" type="submit">
                 <span style={{ color: "#333" }}>PROCESSING . . .</span>
@@ -91,9 +110,13 @@ class Login extends Component {
               </button>
             )}
           </form>
-          <div className="signup-link" style={{ fontSize: 12 }} onClick = {()=>this.props.history.push("/regist")}>
+          <div
+            className="signup-link"
+            style={{ fontSize: 14 }}
+            onClick={() => this.props.history.push("/regist")}
+          >
             Do not have an account?{" "}
-            <span style={{ color: "rgb(28, 150, 65)", fontSize: 12 }}>
+            <span style={{ color: "rgb(28, 150, 65)", fontSize: 14 }}>
               SIGN UP
             </span>
           </div>

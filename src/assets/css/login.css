@@ -24,6 +24,7 @@ form{
 }
 
 .login-input{
+    font-size: 16px;
     margin-bottom: 4px;
     background-color: rgb(255, 255, 255);
     color: #333;
@@ -34,13 +35,18 @@ form{
 }
 
 .login, .processing{
+    font-size: 16px;
     position: relative;
     border: 1px solid rgb(28, 150, 65);
-    padding: 6px 12px;
+    padding: 6px 0px;
     border-radius: 4px;
     margin-top:8px;
     cursor: pointer;
-    width: 50%
+    width: 60%;
+}
+
+.processing{
+    animation: example 1s infinite;
 }
 
 .login{
@@ -59,3 +65,8 @@ form{
     margin-top: 16px;
     cursor: pointer;
 }
+
+@keyframes example {
+    from {opacity: 0.1;}
+    to {opacity: 1;}
+  }

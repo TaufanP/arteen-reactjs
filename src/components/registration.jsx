@@ -1,6 +1,9 @@
 import React, { Component } from "react";
 import "../assets/css/login.css";
 import axios from "axios";
+import { URL_ADDRESS } from "../env";
+
+const URL_STRING = URL_ADDRESS;
 class Registration extends Component {
   constructor() {
     super();
@@ -8,7 +11,8 @@ class Registration extends Component {
       name: "",
       username: "",
       password: "",
-      loading: false
+      loading: false,
+      error: ""
     };
   }
 
@@ -19,31 +23,39 @@ class Registration extends Component {
   };
 
   handleSubmit = async event => {
-    const { name, username, password } = this.state;
+    const { name, username, password, error } = this.state;
     event.preventDefault();
-    const data = {
-      name,
-      username,
-      password
-    };
-    this.setState({ loading: true });
-    await axios
-      .post("http://54.159.200.168:8081/api/v1/users/", data)
-      .then(res => {
-        this.props.history.push("/")
-        this.setState({ loading: false });
-      })
-      .catch(err => {
-        alert("Registration failed! Please try again!")
-        this.setState({ loading: false });
-      });
+    if (name === "") {
+      this.setState({ error: "Complete Name" });
+    } else if (username === "") {
+      this.setState({ error: "Username" });
+    } else if (password === "") {
+      this.setState({ error: "Password" });
+    } else {
+      const data = {
+        name,
+        username,
+        password
+      };
+      this.setState({ loading: true });
+      await axios
+        .post(URL_STRING + "users/", data)
+        .then(res => {
+          this.props.history.push("/");
+          this.setState({ loading: false });
+        })
+        .catch(err => {
+          alert("Registration failed! Please try again!");
+          this.setState({ loading: false });
+        });
+    }
   };
 
   render() {
     if (localStorage.getItem("token") !== null) {
       this.props.history.push("/product");
     }
-    const { loading } = this.state;
+    const { loading, error } = this.state;
     return (
       <div>
         <div className="login-container">
@@ -88,6 +100,18 @@ class Registration extends Component {
                 </tr>
               </tbody>
             </table>
+            {error !== "" && (
+              <div
+                style={{
+                  marginTop: 8,
+                  marginBottom: 8,
+                  fontSize: 14,
+                  color: "red"
+                }}
+              >
+                {error} cannot be empty!
+              </div>
+            )}
             {loading ? (
               <button className="processing" type="submit">
                 <span style={{ color: "#333" }}>PROCESSING . . .</span>

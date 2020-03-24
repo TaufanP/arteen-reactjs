@@ -14,7 +14,7 @@ class CheckoutDetail extends Component {
             </div>
             <div className="checkout-cashier">
               <span style={{ fontSize: 12, fontWeight: "bold" }}>
-                Cashier: Taufan
+                Cashier: {localStorage.getItem('cashier')}
               </span>
             </div>
           </div>

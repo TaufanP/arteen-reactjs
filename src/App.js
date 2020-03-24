@@ -334,7 +334,7 @@ class App extends Component {
   //======================================================================================================================================
   componentDidMount() {
     if (localStorage.getItem("token") !== null) {
-      this.getProduct();
+      this.getProduct(); 
     } else {
       this.props.history.push("/loginwarn");
     }
