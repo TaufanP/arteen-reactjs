@@ -6,8 +6,8 @@ class Cart extends Component {
   render() {
     const date = new Date();
     const fullYear = date.getFullYear();
-    const month =
-      date.getMonth() + 1 < 10 ? "0" + date.getMonth() : date.getMonth();
+    let month = date.getMonth()+1
+    month = month < 10 ? '0' + month : month
     const day = date.getDate() < 10 ? "0" + date.getDate() : date.getDate();
     const hours =
       date.getHours() < 10 ? "0" + date.getHours() : date.getHours();

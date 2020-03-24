@@ -46,6 +46,7 @@ class App extends Component {
       detailCheckout: [],
       detailOrders: [],
       showCheckout: false,
+      invoice: ''
     };
   }
 
@@ -239,59 +240,61 @@ class App extends Component {
   };
 
   handleSubmitOrder = async invoice => {
-    // let totalPrice = 0;
+    this.setState({invoice})
+    let totalPrice = 0;
     const config = {
       headers: {
         "x-access-token": localStorage.getItem("token")
       }
     };
-    // this.state.cart.map(async value => {
-    //   const quantity = localStorage.getItem(value.id);
-    //   totalPrice = totalPrice + quantity * value.price;
-    //   const data = {
-    //     id_product: value.id,
-    //     quantity: quantity,
-    //     total_price: quantity * value.price,
-    //     invoice
-    //   };
+    this.state.cart.map(async value => {
+      const quantity = localStorage.getItem(value.id);
+      totalPrice = totalPrice + quantity * value.price;
+      const data = {
+        id_product: value.id,
+        quantity: quantity,
+        total_price: quantity * value.price,
+        invoice
+      };
 
-    //   await axios
-    //     .post(URL_STRING + "order/", data, config)
-    //     .then(res => {
-    //       console.log("berhasil order");
-    //     })
-    //     .catch(err => console.log("gagal order"));
-    // });
-    // const dataCheckout = {
-    //   invoice,
-    //   total: totalPrice
-    // };
-    // await axios
-    //   .post(URL_STRING + "checkout/", dataCheckout, config)
-    //   .then(res => {
-    //     console.log("berhasil order");
-    //   })
-    //   .catch(err => console.log("gagal order"));
+      await axios
+        .post(URL_STRING + "order/", data, config)
+        .then(res => {
+          console.log("berhasil order");
+        })
+        .catch(err => console.log(err));
+    });
+    const dataCheckout = {
+      invoice,
+      total: totalPrice
+    };
+    await axios
+      .post(URL_STRING + "checkout/", dataCheckout, config)
+      .then(res => {
+        console.log("berhasil order");
+      })
+      .catch(err => console.log(err));
 
     await axios
-      .get(URL_STRING + "checkout/210320200001", config)
+      .get(URL_STRING + "checkout/" + invoice, config)
       .then(res => {
         const detailCheckout = res.data.result[0];
         this.setState({detailCheckout})
       })
-      .catch(err => console.log("gagal checkout"));
+      .catch(err => console.log(err));
 
     await axios
-      .get(URL_STRING + "order/invoice/210320200001", config)
+      .get(URL_STRING + "order/invoice/" + invoice, config)
       .then(res => {
         const detailOrders = res.data.result;
         this.setState({detailOrders})
       })
-      .catch(err => console.log("gagal checkout"));
-    // cart = [];
-    // cartId = [];
-    // this.setState({ cart: [] });
-    // localStorage.clear();
+      .catch(err => console.log(err));
+    cart = [];
+    cartId = [];
+    this.setState({ cart: [] });
+    this.setState({ showCheckout: !this.state.showCheckout });
+    this.state.cart.map(async value => {localStorage.removeItem(value.id);})
   };
 
   handleSearch = e => {
@@ -316,6 +319,10 @@ class App extends Component {
     this.setState({ image: e.target.files[0] });
   };
 
+  handleLogout = () => {
+    localStorage.removeItem('token')
+    this.props.history.push("/");
+  }
   //======================================================================================================================================
   componentDidMount() {
     if (localStorage.getItem("token") !== null) {
@@ -328,7 +335,7 @@ class App extends Component {
   render() {
     return (
       <div>
-        <Navbar handleSearch={this.handleSearch} cart={this.state.cart} />
+        <Navbar handleSearch={this.handleSearch} cart={this.state.cart} handleLogout= {this.handleLogout}/>
         <TrainMenu showModal={this.showModal} />
         <Products
           handleCart={this.handleCart}
@@ -362,6 +369,7 @@ class App extends Component {
           handleUpdate={this.handleUpdate}
         />
         <CheckoutDetail
+          invoice = {this.state.invoice}
           showCheckoutModal={this.showCheckoutModal}
           checkoutModal = {this.state.showCheckout}
           detailCheckout = {this.state.detailCheckout}

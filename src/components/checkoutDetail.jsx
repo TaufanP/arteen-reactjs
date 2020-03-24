@@ -20,7 +20,7 @@ class CheckoutDetail extends Component {
           </div>
           <div className="header-receipt">
             <div className="left-receipt">
-              <span>Receipt #23032020114920</span>
+              <span>Receipt #{this.props.invoice}</span>
             </div>
           </div>
         </div>

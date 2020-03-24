@@ -15,7 +15,7 @@ class Navbar extends Component {
           </div>
           <FoodItemNav text={'Food Items'}/>
           <SearchBarNav />
-          <Logout />
+          <Logout handleLogout = {this.props.handleLogout}/>
           <CartHeader cart={this.props.cart} />
         </div>
       </div>

@@ -32,7 +32,6 @@ class Login extends Component{
             }else{
                 localStorage.setItem('token', data.token)
                 this.props.history.push('/product')
-                console.log(data.token)
             }
         })
         .catch(err => {
