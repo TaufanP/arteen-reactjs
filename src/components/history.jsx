@@ -5,8 +5,21 @@ import Header from "./header";
 import CardHistory from "./cardHistory";
 
 class History extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      show: false
+    };
+  }
   relogin = () => {
     this.props.history.push("/product");
+  };
+  showModal = () => {
+    this.setState({ show: true });
+  };
+
+  hideModal = () => {
+    this.setState({ show: false });
   };
   componentDidMount() {
     if (localStorage.getItem("token") === null) {
@@ -17,7 +30,7 @@ class History extends Component {
     return (
       <div>
         <Header />
-        <TrainMenu />
+        <TrainMenu  showModal={this.showModal} />
         <CardHistory />
       </div>
     );

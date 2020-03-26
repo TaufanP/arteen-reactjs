@@ -31,7 +31,7 @@
     width: 45%;
     height: 50%;
     position: relative;
-    float: left;  
+    float: left;
 }
 
 .detail-price{
@@ -63,10 +63,23 @@
 }
 
 .container-counter{
-    width: 55%;
+    align-items: center;
+    display: flex;
+    width: 50%;
     margin-left: 16px;
 }
 
 .counter-number{
     padding: 0px 8px;
+    border: 1px solid rgb(22, 193, 75);
+    background-color: rgba(22, 193, 75, 0.1);
+    color: rgb(22, 193, 75);
+}
+
+.container-counter button{
+    height: 23px;
+    width: 23px;
+    border: 1px solid rgb(22, 193, 75);
+    background-color: rgba(22, 193, 75, 0.2);
+    color: rgb(22, 193, 75);
 }

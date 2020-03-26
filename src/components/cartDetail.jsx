@@ -17,15 +17,14 @@ class CartDetail extends Component {
   delItem = del => {
     if (this.state.counter > 1) {
       this.setState({ counter: this.state.counter - del });
-    }
-    else{
-        this.props.handleCartRemove(this.props.cart.id)
-        localStorage.removeItem(this.props.cart.id)
+    } else {
+      this.props.handleCartRemove(this.props.cart.id);
+      localStorage.removeItem(this.props.cart.id);
     }
   };
 
-  componentDidUpdate(){
-    localStorage.setItem(this.props.cart.id, this.state.counter)
+  componentDidUpdate() {
+    localStorage.setItem(this.props.cart.id, this.state.counter);
   }
 
   render() {
