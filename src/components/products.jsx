@@ -19,6 +19,7 @@ class Products extends Component {
             handleCart={this.props.handleCart}
             selected={this.props.selected}
             selectedValue = {this.props.selectedValue}
+            cart = {this.props.cart}
           />
         ))}
       </div>

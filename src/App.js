@@ -6,7 +6,7 @@ import Cart from "./components/cart";
 import TrainMenu from "./components/trainMenu";
 import Navbar from "./components/navbar";
 import Products from "./components/products";
-import CheckoutDetail from './components/checkoutDetail'
+import CheckoutDetail from "./components/checkoutDetail";
 import axios from "axios";
 import { URL_ADDRESS } from "./env";
 
@@ -25,8 +25,8 @@ class App extends Component {
           price: "",
           stock: "",
           image: null,
-          id_category: 0
-        }
+          id_category: 0,
+        },
       ],
       cart: [],
       cartFull: [],
@@ -45,7 +45,7 @@ class App extends Component {
       detailCheckout: [],
       detailOrders: [],
       showCheckout: false,
-      invoice: '',
+      invoice: "",
       loadingSubmitOrder: false,
     };
   }
@@ -78,114 +78,133 @@ class App extends Component {
   getProduct() {
     axios
       .get(URL_STRING + "product", {
-        headers: { "x-access-token": localStorage.getItem("token") }
+        headers: { "x-access-token": localStorage.getItem("token") },
       })
-      .then(res => {
+      .then((res) => {
         const data = res.data.result;
         this.setState({ products: data });
       })
-      .catch(err => console.log(err));
+      .catch((err) => console.log(err));
   }
 
-  getProductSearch = search => {
+  getProductSearch = (search) => {
     if (search === "") {
       this.getProduct();
     } else {
       axios
         .get(URL_STRING + "product/search/" + search, {
-          headers: { "x-access-token": localStorage.getItem("token") }
+          headers: { "x-access-token": localStorage.getItem("token") },
         })
-        .then(res => {
+        .then((res) => {
           const data = res.data.result;
           this.setState({ products: data });
           console.log(search);
         })
-        .catch(err => console.log(err));
+        .catch((err) => console.log(err));
     }
   };
 
-  getProductSort = sort => {
+  getProductSort = (sort) => {
     if (sort === "none") {
       this.getProduct();
     } else {
       axios
         .get(URL_STRING + "product/sort/" + sort, {
-          headers: { "x-access-token": localStorage.getItem("token") }
+          headers: { "x-access-token": localStorage.getItem("token") },
         })
-        .then(res => {
+        .then((res) => {
           const data = res.data.result;
           this.setState({ products: data });
           console.log(sort);
         })
-        .catch(err => console.log(err));
+        .catch((err) => console.log(err));
     }
   };
 
-  getProductDetail = id => {
+  getProductDetail = (id) => {
     axios
       .get(URL_STRING + "product/" + id, {
-        headers: { "x-access-token": localStorage.getItem("token") }
+        headers: { "x-access-token": localStorage.getItem("token") },
       })
-      .then(res => {
+      .then((res) => {
         const data = res.data.result[0];
         this.setState({ cartFull: data });
         console.log(this.state.cartFull);
       })
-      .catch(err => console.log(err));
+      .catch((err) => console.log(err));
   };
 
   // Handle
   //======================================================================================================================================
 
-  handleCart = product => {
+  handleCart = (product) => {
     if (cartId.length === 0) {
       cartId.push(product);
-      this.state.products.map(value => {
-        if (value.id === product) cart.push(value);
+      this.state.products.map((value) => {
+        if (value.id === product)
+          cart.push({
+            id: value.id,
+            name: value.name,
+            price: value.price,
+            stock: value.stock,
+            image: value.image,
+            category: value.category,
+            count: 1
+          });
       });
     } else {
       if (!cartId.includes(product)) {
         cartId.push(product);
-        this.state.products.map(value => {
-          if (value.id === product) cart.push(value);
+        this.state.products.map((value) => {
+          if (value.id === product)
+            cart.push({
+              id: value.id,
+              name: value.name,
+              price: value.price,
+              stock: value.stock,
+              image: value.image,
+              category: value.category,
+              count: 1
+            });
         });
       }
     }
     this.setState({ cart });
+    console.log(cart);
   };
 
-  handleCartRemove = product => {
-    cartId = cartId.filter(i => i !== product);
-    cart = cart.filter(i => i.id !== product);
+  handleCartRemove = (product) => {
+    cartId = cartId.filter((i) => i !== product);
+    cart = cart.filter((i) => i.id !== product);
     this.setState({ cart });
   };
 
   handleCartCancel = () => {
-    cartId = []
-    cart = []
+    cartId = [];
+    cart = [];
     this.setState({ cart });
   };
 
-  handleDelete = id => {
+  handleDelete = (id) => {
     axios.delete(URL_STRING + "product/" + id, {
-      headers: { "x-access-token": localStorage.getItem("token") }
+      headers: { "x-access-token": localStorage.getItem("token") },
     });
     this.getProduct();
   };
 
-  handleEdit = id => {
+  handleEdit = (id) => {
     axios
       .get(URL_STRING + "product/" + id, {
-        headers: { "x-access-token": localStorage.getItem("token") }
+        headers: { "x-access-token": localStorage.getItem("token") },
       })
-      .then(res => {
+      .then((res) => {
         const data = res.data.result;
         this.setState({ edit: data });
       })
-      .catch(err => console.log(err));
+      .catch((err) => console.log(err));
   };
 
-  handleUpdate = async id => {
+  handleUpdate = async (id) => {
     console.log(id);
     let formData = new FormData();
     formData.append("name", this.state.name);
@@ -197,18 +216,18 @@ class App extends Component {
     const config = {
       headers: {
         "content-type": "multipart/form-data",
-        "x-access-token": localStorage.getItem("token")
-      }
+        "x-access-token": localStorage.getItem("token"),
+      },
     };
 
     await axios
       .patch(URL_STRING + "product/" + id, formData, config)
-      .then(res => this.setState({ showUpdate: false }))
-      .catch(err => console.log("gagal masuk"));
+      .then((res) => this.setState({ showUpdate: false }))
+      .catch((err) => console.log("gagal masuk"));
     this.getProduct();
   };
 
-  handleSubmit = async e => {
+  handleSubmit = async (e) => {
     e.preventDefault();
     let formData = new FormData();
     formData.append("name", this.state.name);
@@ -221,91 +240,93 @@ class App extends Component {
     const config = {
       headers: {
         "Content-Type": "multipart/form-data",
-        "x-access-token": localStorage.getItem("token")
-      }
+        "x-access-token": localStorage.getItem("token"),
+      },
     };
 
     await axios
       .post(URL_STRING + "product/", formData, config)
-      .then(res => {
+      .then((res) => {
         console.log("berhasil masuk");
         this.setState({ show: false });
       })
-      .catch(err => console.log("gagal masuk"));
+      .catch((err) => console.log("gagal masuk"));
 
     this.getProduct();
   };
 
   handleTotalPrice = () => {
     let totalPrice = 0;
-    this.state.cart.map(async value => {
+    this.state.cart.map(async (value) => {
       const quantity = localStorage.getItem(value.id);
       totalPrice = totalPrice + quantity * value.price;
     });
     this.setState({ totalPrice });
   };
 
-  handleSubmitOrder = async invoice => {
-    this.setState({loadingSubmitOrder: true})
-    this.setState({invoice})
+  handleSubmitOrder = async (invoice) => {
+    this.setState({ loadingSubmitOrder: true });
+    this.setState({ invoice });
     let totalPrice = 0;
     const config = {
       headers: {
-        "x-access-token": localStorage.getItem("token")
-      }
+        "x-access-token": localStorage.getItem("token"),
+      },
     };
-    this.state.cart.map(async value => {
+    this.state.cart.map(async (value) => {
       const quantity = localStorage.getItem(value.id);
       totalPrice = totalPrice + quantity * value.price;
       const data = {
         id_product: value.id,
         quantity: quantity,
         total_price: quantity * value.price,
-        invoice
+        invoice,
       };
 
       await axios
         .post(URL_STRING + "order/", data, config)
-        .then(res => {
+        .then((res) => {
           console.log("berhasil order");
         })
-        .catch(err => console.log(err));
+        .catch((err) => console.log(err));
     });
     const dataCheckout = {
       invoice,
-      total: totalPrice
+      total: totalPrice,
     };
     await axios
       .post(URL_STRING + "checkout/", dataCheckout, config)
-      .then(res => {
+      .then((res) => {
         console.log("berhasil order");
       })
-      .catch(err => console.log(err));
+      .catch((err) => console.log(err));
 
     await axios
       .get(URL_STRING + "checkout/" + invoice, config)
-      .then(res => {
+      .then((res) => {
         const detailCheckout = res.data.result[0];
-        this.setState({detailCheckout})
+        this.setState({ detailCheckout });
       })
-      .catch(err => console.log(err));
+      .catch((err) => console.log(err));
 
     await axios
       .get(URL_STRING + "order/invoice/" + invoice, config)
-      .then(res => {
+      .then((res) => {
         const detailOrders = res.data.result;
-        this.setState({detailOrders})
+        this.setState({ detailOrders });
       })
-      .catch(err => console.log(err));
+      .catch((err) => console.log(err));
     cart = [];
     cartId = [];
     this.setState({ cart: [] });
     this.setState({ showCheckout: !this.state.showCheckout });
-    this.state.cart.map(async value => {localStorage.removeItem(value.id);})
-    this.setState({loadingSubmitOrder: false})
+    this.state.cart.map(async (value) => {
+      localStorage.removeItem(value.id);
+    });
+    this.setState({ loadingSubmitOrder: false });
   };
 
-  handleSearch = e => {
+  handleSearch = (e) => {
     e.preventDefault();
     this.setState({ search: e.target.value }, () =>
       this.getProductSearch(this.state.search)
@@ -319,22 +340,22 @@ class App extends Component {
     // }
   };
 
-  handleChange = e => {
+  handleChange = (e) => {
     this.setState({ [e.target.name]: e.target.value });
   };
 
-  handleChangeImage = e => {
+  handleChangeImage = (e) => {
     this.setState({ image: e.target.files[0] });
   };
 
   handleLogout = () => {
-    localStorage.removeItem('token')
+    localStorage.removeItem("token");
     this.props.history.push("/");
-  }
+  };
   //======================================================================================================================================
   componentDidMount() {
     if (localStorage.getItem("token") !== null) {
-      this.getProduct(); 
+      this.getProduct();
     } else {
       this.props.history.push("/loginwarn");
     }
@@ -343,7 +364,11 @@ class App extends Component {
   render() {
     return (
       <div>
-        <Navbar handleSearch={this.handleSearch} cart={this.state.cart} handleLogout= {this.handleLogout}/>
+        <Navbar
+          handleSearch={this.handleSearch}
+          cart={this.state.cart}
+          handleLogout={this.handleLogout}
+        />
         <TrainMenu showModal={this.showModal} />
         <Products
           handleCart={this.handleCart}
@@ -351,6 +376,7 @@ class App extends Component {
           showModalUpdate={this.showModalUpdate}
           products={this.state.products}
           handleEdit={this.handleEdit}
+          cart = {cartId}
         />
         <Cart
           cart={this.state.cart}
@@ -360,7 +386,7 @@ class App extends Component {
           handleTotalPrice={this.handleTotalPrice}
           totalPrice={this.state.totalPrice}
           handleCartCancel={this.handleCartCancel}
-          loadingSubmitOrder = {this.loadingSubmitOrder}
+          loadingSubmitOrder={this.loadingSubmitOrder}
         />
         <FormProduct
           showModal={this.showModal}
@@ -378,11 +404,11 @@ class App extends Component {
           handleUpdate={this.handleUpdate}
         />
         <CheckoutDetail
-          invoice = {this.state.invoice}
+          invoice={this.state.invoice}
           showCheckoutModal={this.showCheckoutModal}
-          checkoutModal = {this.state.showCheckout}
-          detailCheckout = {this.state.detailCheckout}
-          detailOrders = {this.state.detailOrders}
+          checkoutModal={this.state.showCheckout}
+          detailCheckout={this.state.detailCheckout}
+          detailOrders={this.state.detailOrders}
         />
       </div>
     );

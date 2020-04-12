@@ -5,7 +5,7 @@ class ListProduct extends Component {
   render() {
     return (
       <div className="item-container" onClick={() => this.props.selected}>
-        <div className="item-image">
+        <div className={this.props.cart.indexOf(this.props.id)!==-1? "item-image-selected" : "item-image"}>
           <img src={this.props.image} alt={this.props.name} />
         </div>
         <div
