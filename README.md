@@ -1,8 +1,8 @@
 <h1 align='center'>Arteen</h1>
 
 <p align='center'>
-  <a href='https://facebook.github.io/react-native/'>
-  <img width="500" src='https://cdn-images-1.medium.com/max/1600/1*-B6I9Z__mLkkiSShRLR4iQ.png' />
+  <a href='https://reactjs.org/'>
+  <img width="500" src='https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg' />
   </a>
 </p>
 
