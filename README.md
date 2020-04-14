@@ -1,8 +1,7 @@
 <h1 align='center'>Arteen</h1>
-
 <p align='center'>
   <a href='https://reactjs.org/'>
-  <img width="500" src='https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg' />
+  <img height="200" src='https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg' />
   </a>
 </p>
 
