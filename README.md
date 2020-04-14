@@ -9,16 +9,15 @@
 <br>
 
 
-Arteen is a Point of Sale (POS) application built with ReactJS, Redux, and NodeJS. POS app is an application used to manage store's goods and record the orders. Arteen backend built with NodeJS can be found at <a href="https://github.com/TaufanP/Arteen-NodeJS">Arteen-NodeJS.</a>
+Arteen is a Point of Sale (POS) application built with ReactJS and NodeJS. POS app is an application used to manage store's goods and record the orders. Arteen backend built with NodeJS can be found at <a href="https://github.com/TaufanP/Arteen-NodeJS">Arteen-NodeJS.</a>
 
 
 ## Introduction
 [![React.js](https://img.shields.io/badge/React-16.12.0-blue.svg?style=rounded-square)](https://facebook.github.io/react/)
-[![Redux](https://img.shields.io/badge/Redux-v.4.0.5-purple.svg?style=rounded-square)](https://redux.js.org/)
 [![Axios](https://img.shields.io/badge/Axios-v.0.19.2-66a1ff.svg?style=rounded-square)](https://github.com/axios/axios)
 
 ## Related Project
-<a href="https://github.com/TaufanP/Arteen-ReactJS">ReactJS - Arteen ReactJS</a>
+<a href="https://github.com/TaufanP/Arteen-Redux">Arteen Redux</a>
 
 
 ## Requirements
